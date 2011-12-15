@@ -1,6 +1,6 @@
 <?php
 
-$zf2Path = realpath(__DIR__ . '/../vendor/zf2/library/');
+$zf2Path = '/var/php/library/zf2/library/';
 set_include_path($zf2Path . PATH_SEPARATOR . get_include_path());
 
 

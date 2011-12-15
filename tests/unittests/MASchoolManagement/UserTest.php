@@ -19,8 +19,4 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	public function testHasLastName() {
 		$this->assertSame('Hogue', $this->user->getLastName());
 	}
-
-	public function testFail() {
-		$this->fail('TEst Jenkins');
-	}
 }

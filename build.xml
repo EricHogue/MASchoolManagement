@@ -69,11 +69,18 @@
   <exec executable="phpcs" output="/dev/null">
    <arg line="--report=checkstyle
               --report-file=${basedir}/build/logs/checkstyle.xml
-              --standard=PEAR
+              --standard=${basedir}/phpcs.xml
               ${source}" />
   </exec>
  </target>
 
+ <target name="cl-phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
+  <exec executable="phpcs">
+   <arg line="--standard=${basedir}/phpcs.xml
+              ${source}" />
+  </exec>
+ </target>
+ 
  <target name="phpdoc" description="Generate API documentation using PHPDocumentor">
   <exec executable="phpdoc">
    <arg line="-d ${source} -t ${basedir}/build/api" />

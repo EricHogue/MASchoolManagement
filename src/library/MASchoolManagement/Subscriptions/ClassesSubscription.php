@@ -19,6 +19,7 @@ class ClassesSubscription implements Subscription {
 	 * @return boolean true if the user can attend
 	 */
 	public function canAttend(Date $date) {
+		$date;
 		return $this->remainingClasses > 0;
 	}
 

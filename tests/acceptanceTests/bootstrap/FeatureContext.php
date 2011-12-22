@@ -32,39 +32,5 @@ class FeatureContext extends BehatContext
 
 //
 // Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
-
-    /**
-     * @Given /^I have a test$/
-     */
-    public function iHaveATest()
-    {
-        //throw new PendingException();
-    }
-
-    /**
-     * @When /^I run Jenkins$/
-     */
-    public function iRunJenkins()
-    {
-        //throw new PendingException();
-    }
-
-    /**
-     * @Then /^It Should Produce Reports$/
-     */
-    public function itShouldProduceReports()
-    {
-
-        //throw new PendingException();
-    }
 
 }

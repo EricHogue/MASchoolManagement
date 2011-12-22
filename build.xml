@@ -100,5 +100,5 @@
  </target>
 
  <target name="build" depends="clean,parallelTasks,phpunit,phpcb"/>
- <target name="build2" depends="clean,behat" />
+ <target name="buildAcceptanceTests" depends="clean,behat" />
 </project>

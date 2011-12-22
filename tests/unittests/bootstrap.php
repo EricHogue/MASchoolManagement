@@ -11,7 +11,7 @@ use Zend\Loader\AutoloaderFactory;
 AutoloaderFactory::factory(array(
 	'Zend\Loader\StandardAutoloader' => array(
 		'namespaces' => array(
-			'MASchoolManagement' => __DIR__ . '/../src/library/MASchoolManagement',
+			'MASchoolManagement' => __DIR__ . '/../../src/library/MASchoolManagement',
 		),
 	),
 ));

@@ -5,7 +5,13 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	public function setup() {
 	}
 
-	public function testTest() {
-		$this->assertTrue(true);
+	public function testCreate() {
+		$this->assertNotNull(new UserSubscriptions());
+	}
+
+	public function testCanAddSubscription() {
+		$userSubscriptions = new UserSubscriptions();
+
+		$this->assertTrue($userSubscriptions->addSubscription(new ClassesSubscription(3)));
 	}
 }

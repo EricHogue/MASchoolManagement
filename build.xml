@@ -74,7 +74,7 @@
   </exec>
  </target>
 
- <target name="cl-phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
+ <target name="cl-phpcs" description="Run PHP_CodeSniffer for command line output">
   <exec executable="phpcs">
    <arg line="--standard=${basedir}/phpcs.xml
               ${source}" />

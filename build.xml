@@ -10,12 +10,16 @@
   <delete dir="${basedir}/build/coverage"/>
   <delete dir="${basedir}/build/logs"/>
   <delete dir="${basedir}/build/pdepend"/>
+  <delete dir="${basedir}/build/acceptanceTests"/>
+  <delete dir="${basedir}/build/acceptanceTests/junit"/>
 
   <mkdir dir="${basedir}/build/api"/>
   <mkdir dir="${basedir}/build/code-browser"/>
   <mkdir dir="${basedir}/build/coverage"/>
   <mkdir dir="${basedir}/build/logs"/>
   <mkdir dir="${basedir}/build/pdepend"/>
+  <mkdir dir="${basedir}/build/acceptanceTests"/>
+  <mkdir dir="${basedir}/build/acceptanceTests/junit"/>
  </target>
 
  <target name="phpunit" description="Run unit tests using PHPUnit and generates junit.xml and clover.xml">
@@ -95,10 +99,14 @@
   </exec>
  </target>
  
- <target name="behat" description="Run Behat" depends="clean">
- 	<exec executable="behat" />
+ <target name="acceptanceTests" description="Run Behat" depends="clean">
+ 	<exec executable="behat" failonerror="true">
+ 		<arg line="--format html,junit --out 
+ 			${basedir}/build/acceptanceTests/acceptanceTests.html,${basedir}/build/acceptanceTests/junit/
+ 		" />
+ 	</exec>
  </target>
 
  <target name="build" depends="clean,parallelTasks,phpunit,phpcb"/>
- <target name="buildAcceptanceTests" depends="clean,behat" />
+ <target name="buildAcceptanceTests" depends="clean,acceptanceTests" />
 </project>

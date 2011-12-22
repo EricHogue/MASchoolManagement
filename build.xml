@@ -94,6 +94,11 @@
               --output ${basedir}/build/code-browser" />
   </exec>
  </target>
+ 
+ <target name="behat" description="Run Behat" depends="clean">
+ 	<exec executable="behat" />
+ </target>
 
  <target name="build" depends="clean,parallelTasks,phpunit,phpcb"/>
+ <target name="build2" depends="clean,behat" />
 </project>

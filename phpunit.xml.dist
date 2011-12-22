@@ -5,11 +5,11 @@
          backupStaticAttributes="false"
          strict="true"
          verbose="true"
-         bootstrap="tests/unittests/bootstrap.php"
+         bootstrap="tests/unitTests/bootstrap.php"
          >
   <testsuites>
     <testsuite name="MASchoolManagement">
-		<directory suffix="Test.php">tests/unittests</directory>
+		<directory suffix="Test.php">tests/unitTests</directory>
     </testsuite>
   </testsuites>
 

@@ -63,6 +63,7 @@ class FeatureContext extends BehatContext
      */
     public function itShouldProduceReports()
     {
+
         //throw new PendingException();
     }
 

@@ -33,4 +33,28 @@ class FeatureContext extends BehatContext
 //
 // Place your definition and hook methods here:
 
+    /**
+     * @Given /^I have "([^"]*)" classes Left$/
+     */
+    public function iHaveClassesLeft($classesCount)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I check if I can attend$/
+     */
+    public function iCheckIfICanAttend()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^I should get "([^"]*)"$/
+     */
+    public function iShouldGet($argument1)
+    {
+        throw new PendingException();
+    }
+
 }

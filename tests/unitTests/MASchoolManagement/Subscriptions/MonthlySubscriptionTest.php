@@ -33,35 +33,64 @@ class MonthlySubscriptionTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCantAttendBeforeStartDate() {
-		$date = new Date(self::START_DATE, 'yyyy-mm-dd');
-		$this->assertFalse($this->subscription->canAttend($date->add(-1, Date::DAY)));
+		$startDate = new Date();
+		$startDate->addDay(1);
+		$endDate = new Date();
+		$endDate->addDay(2);
+		$subscription = new MonthlySubscription($startDate, $endDate);
+
+		$this->assertFalse($subscription->canAttend());
 	}
 
 	public function testCantAttendAfterEndDate() {
-		$date = new Date(self::END_DATE, 'yyyy-mm-dd');
-		$this->assertFalse($this->subscription->canAttend($date->add(1, Date::DAY)));
+		$startDate = new Date();
+		$startDate->addDay(-2);
+		$endDate = new Date();
+		$endDate->addDay(-1);
+		$subscription = new MonthlySubscription($startDate, $endDate);
+
+		$this->assertFalse($subscription->canAttend());
 	}
 
 	public function testCanAttendOnStartDate() {
-		$date = new Date(self::START_DATE, 'yyyy-mm-dd');
-		$this->assertTrue($this->subscription->canAttend($date));
+		$startDate = new Date();
+		$endDate = new Date();
+		$endDate->addDay(1);
+		$subscription = new MonthlySubscription($startDate, $endDate);
+
+
+		$this->assertTrue($subscription->canAttend());
 	}
 
 	public function testCanAttendOnEndDate() {
-		$date = new Date(self::END_DATE, 'yyyy-mm-dd');
-		$this->assertTrue($this->subscription->canAttend($date));
+		$startDate = new Date();
+		$startDate->addDay(-1);
+		$endDate = new Date();
+		$subscription = new MonthlySubscription($startDate, $endDate);
+
+		$this->assertTrue($subscription->canAttend());
 	}
 
 	/**
 	 * @expectedException \MASchoolManagement\Subscriptions\EndedSubscriptionException
 	 */
 	public function testThrowExceptionWhenAddingAttendanceOutsideRange() {
-		$date = new Date(self::END_DATE, 'yyyy-mm-dd');
-		$this->subscription->addAttendance($date->add(1, Date::DAY));
+		$startDate = new Date();
+		$startDate->addDay(-2);
+		$endDate = new Date();
+		$endDate->addDay(-2);
+		$subscription = new MonthlySubscription($startDate, $endDate);
+
+		$subscription->addAttendance();
 	}
 
 	public function testCanAddAttendanceWhenInSubscriptionRange() {
-		$date = new Date(self::START_DATE, 'yyyy-mm-dd');
-		$this->assertTrue($this->subscription->addAttendance($date->add(10, Date::DAY)));
+		$startDate = new Date();
+		$startDate->addDay(-1);
+		$endDate = new Date();
+		$endDate->addDay(1);
+		$subscription = new MonthlySubscription($startDate, $endDate);
+
+		$this->assertTrue($subscription->addAttendance());
 	}
 }

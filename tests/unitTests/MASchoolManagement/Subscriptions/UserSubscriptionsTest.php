@@ -2,16 +2,17 @@
 namespace MASchoolManagement\Subscriptions;
 
 class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
+	/** @var UserSubscriptions */
+	private $userSubscriptions;
+
 	public function setup() {
+		$this->userSubscriptions = new UserSubscriptions();
 	}
 
-	public function testCreate() {
-		$this->assertNotNull(new UserSubscriptions());
-	}
 
 	public function testCanAddSubscription() {
-		$userSubscriptions = new UserSubscriptions();
-
-		$this->assertTrue($userSubscriptions->addSubscription(new ClassesSubscription(3)));
+		$this->assertTrue($this->userSubscriptions->addSubscription(new ClassesSubscription(3)));
 	}
+
+
 }

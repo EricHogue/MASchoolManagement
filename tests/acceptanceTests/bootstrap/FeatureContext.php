@@ -55,7 +55,7 @@ class FeatureContext extends BehatContext
      */
     public function iCheckIfICanAttend()
     {
-        $this->response = $this->subscription->canAttend(new \Zend\Date\Date());
+        $this->response = $this->subscription->canAttend();
     }
 
     /**

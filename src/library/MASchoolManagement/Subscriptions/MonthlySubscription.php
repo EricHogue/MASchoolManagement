@@ -30,22 +30,20 @@ class MonthlySubscription implements Subscription {
 	}
 
 	/**
-	 * Check if the subscriber can attend at the given date
+	 * Check if the subscriber can attend
 	 *
-	 * @param \Zend\Date\Date $date
 	 * @return boolean true if the user can attend
 	 */
-	public function canAttend(Date $date) {
+	public function canAttend() {
+		$date = new Date();
 		return ($date >= $this->startDate && $date <= $this->endDate);
 	}
 
 	/**
 	 * Add an attendace for a date
-	 *
-	 * @param \Zend\Date\Date $date
 	 */
-	public function addAttendance(Date $date) {
-		if (!$this->canAttend($date)) {
+	public function addAttendance() {
+		if (!$this->canAttend()) {
 			throw new EndedSubscriptionException();
 		}
 

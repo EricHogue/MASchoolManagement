@@ -1,7 +1,6 @@
 <?php
 namespace MASchoolManagement\Subscriptions;
 
-use \Zend\Date\Date;
 
 class ClassesSubscription implements Subscription {
 	/** @var int */
@@ -13,23 +12,19 @@ class ClassesSubscription implements Subscription {
 	}
 
 	/**
-	 * Check if the subscriber can attend at the given date
+	 * Check if the subscriber can attend
 	 *
-	 * @param \Zend\Date\Date $date
 	 * @return boolean true if the user can attend
 	 */
-	public function canAttend(Date $date) {
-		$date;
+	public function canAttend() {
 		return $this->remainingClasses > 0;
 	}
 
 	/**
-	 * Add an attendace for a date
-	 *
-	 * @param \Zend\Date\Date $date
+	 * Add an attendace
 	 */
-	public function addAttendance(Date $date) {
-		if (!$this->canAttend($date)) {
+	public function addAttendance() {
+		if (!$this->canAttend()) {
 			throw new EndedSubscriptionException();
 		}
 

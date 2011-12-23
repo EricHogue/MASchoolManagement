@@ -1,5 +1,8 @@
 <?php
 
+use MASchoolManagement\Subscriptions\SubscriptionFactory;
+use MASchoolManagement\Subscriptions\UserSubscriptions;
+use MASchoolManagement\Student;
 use MASchoolManagement\Subscriptions\ClassesSubscription;
 use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
@@ -20,6 +23,11 @@ require_once 'PHPUnit/Framework/Assert/Functions.php';
  */
 class FeatureContext extends BehatContext
 {
+	/** @var Student */
+	private $student;
+
+
+
     /**
      * Initializes context.
      * Every scenario gets it's own context object.
@@ -33,39 +41,6 @@ class FeatureContext extends BehatContext
 
 //
 // Place your definition and hook methods here:
-
-    /** @var ClassesSubscription */
-    private $subscription;
-
-    /** @var bool */
-    private $response;
-
-
-
-    /**
-     * @Given /^I have "([^"]*)" classes Left$/
-     */
-    public function iHaveClassesLeft($classesCount)
-    {
-        $this->subscription = new ClassesSubscription($classesCount);
-    }
-
-    /**
-     * @When /^I check if I can attend$/
-     */
-    public function iCheckIfICanAttend()
-    {
-        $this->response = $this->subscription->canAttend();
-    }
-
-    /**
-     * @Then /^I should get "([^"]*)"$/
-     */
-    public function iShouldGet($expectedAnswer)
-    {
-    	assertEquals((bool) $expectedAnswer, $this->response);
-    }
-
 
 
     /**
@@ -159,6 +134,15 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * @Given /^(\d+) classes left$/
+     */
+    public function classesLeft($argument1)
+    {
+        throw new PendingException();
+    }
+
+
+    /**
      * @Given /^I have a student with (\d+) months left on a monthly subscription$/
      */
     public function iHaveAStudentWithMonthsLeftOnAMonthlySubscription($argument1)
@@ -204,23 +188,27 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithoutMonthlySubscription()
     {
-        throw new PendingException();
+    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**
      * @When /^I sell him a (\d+) months subscription$/
      */
-    public function iSellHimAMonthsSubscription($argument1)
+    public function iSellHimAMonthsSubscription($numberOfMonths)
     {
-        throw new PendingException();
+        $this->student->addMonthlySubscription($numberOfMonths);
     }
 
     /**
      * @Then /^his subscription should end in (\d+) months$/
      */
-    public function hisSubscriptionShouldEndInMonths($argument1)
+    public function hisSubscriptionShouldEndInMonths($numberOfMonths)
     {
-        throw new PendingException();
+    	$expectedEndDate = new \Zend\Date\Date();
+    	$expectedEndDate->addMonth($numberOfMonths);
+    	$expectedEndDate->setTime('23:59:59', 'HH:mm:ss');
+
+    	assertEquals($expectedEndDate, $this->student->getEndOfSubscriptionDate());
     }
 
     /**

@@ -11,8 +11,8 @@ class MonthlySubscription implements Subscription {
 	private $endDate;
 
 	public function __construct(Date $startDate, Date $endDate) {
-		$this->startDate = $startDate;
-		$this->endDate = $endDate;
+		$this->startDate = $startDate->setTime('00:00:00', 'HH:mm:ss');
+		$this->endDate = $endDate->setTime('23:59:59', 'HH:mm:ss');
 	}
 
 	/**

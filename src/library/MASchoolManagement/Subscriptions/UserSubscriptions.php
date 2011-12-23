@@ -5,24 +5,37 @@ class UserSubscriptions {
 	/** @var ClassesSubscription */
 	private $classesSubscriptions;
 
-	public function __construct() {
+	/** @var MonthlySubscription */
+	private $monthlySubscriptions;
+
+
+	/** @var SubscriptionFactory */
+	private $subscriptionFactory;
+
+
+	public function __construct(SubscriptionFactory $subscriptionFactory) {
+		$this->subscriptionFactory = $subscriptionFactory;
+
+		$this->monthlySubscriptions = array();
 		$this->classesSubscriptions = array();
 	}
 
-	public function canAttendClass() {
-		if (count($this->classesSubscriptions) > 0) {
-			return $this->classesSubscriptions[0]->canAttend();
+	public function addMonthlySubscription($numberOfMonths) {
+		$lastDateAllowed = $this->getLastAllowedDate();
+		if (!isset($lastDateAllowed)) {
+			$lastDateAllowed = new \Zend\Date\Date();
 		}
 
-		return false;
+		$this->monthlySubscriptions[] = $this->subscriptionFactory->createMonthlySubscription($lastDateAllowed, $numberOfMonths);
 	}
 
-	public function addClassesSubscription($classCount) {
-		$this->classesSubscriptions[] = new ClassesSubscription($classCount);
+	public function getLastAllowedDate() {
+		if (count($this->monthlySubscriptions) > 0) {
+			return $this->monthlySubscriptions[0]->getEndDate();
+		}
+
+		return null;
 	}
 
-	public function attendClass() {
-		$this->classesSubscriptions[0]->addAttendance();
-	}
 
 }

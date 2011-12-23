@@ -24,3 +24,10 @@ Scenario: Student with classes left
 	When he try to attend a class
 	Then he should be accepted
 	And he should have 2 classes left
+	
+Scenario: Student with valid monthy Subscription and classes left
+	Given I have a student with 2 months left on a monthly subscription
+	And 3 classes left
+	When he try to attend a class
+	Then he should be accepted
+	And he should have 3 classes left

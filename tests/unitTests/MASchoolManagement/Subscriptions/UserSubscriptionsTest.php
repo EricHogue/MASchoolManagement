@@ -9,9 +9,20 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$this->userSubscriptions = new UserSubscriptions();
 	}
 
+	public function testUserCantAttendWhenNoSubscriptions() {
+		$this->assertFalse($this->userSubscriptions->canAttendClass());
+	}
 
-	public function testCanAddSubscription() {
-		$this->assertTrue($this->userSubscriptions->addSubscription(new ClassesSubscription(3)));
+	public function testUserCanAttendAfterAddingClassesSubscription() {
+		$this->userSubscriptions->addClassesSubscription(1);
+		$this->assertTrue($this->userSubscriptions->canAttendClass());
+	}
+
+	public function testUserCantAttendAfterUsingAllSubscribedClasses() {
+		$this->userSubscriptions->addClassesSubscription(1);
+		$this->userSubscriptions->attendClass();
+
+		$this->assertFalse($this->userSubscriptions->canAttendClass());
 	}
 
 

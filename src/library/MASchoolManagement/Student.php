@@ -1,7 +1,7 @@
 <?php
 namespace MASchoolManagement;
 
-class User {
+class Student {
 	/** @var string */
 	private $lastName;
 
@@ -22,4 +22,5 @@ class User {
 	public function getLastName() {
 		return $this->lastName;
 	}
+
 }

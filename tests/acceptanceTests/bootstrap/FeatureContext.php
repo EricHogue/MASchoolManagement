@@ -66,4 +66,169 @@ class FeatureContext extends BehatContext
     	assertEquals((bool) $expectedAnswer, $this->response);
     }
 
+
+
+    /**
+     * @Given /^I have a new student$/
+     */
+    public function iHaveANewStudent()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I create his profile$/
+     */
+    public function iCreateHisProfile()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^I can retrieve it back$/
+     */
+    public function iCanRetrieveItBack()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I have a student With id: (\d+), firstname "([^"]*)", lastname: "([^"]*)" and rank: "([^"]*)"$/
+     */
+    public function iHaveAStudentWithIdFirstnameLastnameAndRank($argument1, $argument2, $argument3, $argument4)
+    {
+        throw new PendingException();
+    }
+
+
+    /**
+     * @When /^I load his profile$/
+     */
+    public function iLoadHisProfile()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^his firstname should be "([^"]*)"$/
+     */
+    public function hisFirstnameShouldBe($argument1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^his lastname should be "([^"]*)"$/
+     */
+    public function hisLastnameShouldBe($argument1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^his rank should be "([^"]*)"$/
+     */
+    public function hisRankShouldBe($argument1)
+    {
+        throw new PendingException();
+    }
+
+
+    /**
+     * @Given /^a student with no subscription$/
+     */
+    public function aStudentWithNoSubscription()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^he try to attend a class$/
+     */
+    public function heTryToAttendAClass()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^he should be denied$/
+     */
+    public function heShouldBeDenied()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I have a student with (\d+) months left on a monthly subscription$/
+     */
+    public function iHaveAStudentWithMonthsLeftOnAMonthlySubscription($argument1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^he should be accepted$/
+     */
+    public function heShouldBeAccepted()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I have a student with (\d+) classes left$/
+     */
+    public function iHaveAStudentWithClassesLeft($argument1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I have a student with an expired monthly subscription$/
+     */
+    public function iHaveAStudentWithAnExpiredMonthlySubscription()
+    {
+        throw new PendingException();
+    }
+
+
+    /**
+     * @Given /^he should have (\d+) classes left$/
+     */
+    public function heShouldHaveClassesLeft($argument1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I have a student without monthly subscription$/
+     */
+    public function iHaveAStudentWithoutMonthlySubscription()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I sell him a (\d+) months subscription$/
+     */
+    public function iSellHimAMonthsSubscription($argument1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^his subscription should end in (\d+) months$/
+     */
+    public function hisSubscriptionShouldEndInMonths($argument1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I sell him (\d+) classes$/
+     */
+    public function iSellHimClasses($argument1)
+    {
+        throw new PendingException();
+    }
+
 }

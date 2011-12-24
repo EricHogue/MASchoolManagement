@@ -39,5 +39,18 @@ class UserSubscriptions {
 		return null;
 	}
 
+	public function getRemainingClasses() {
+		if (count($this->classesSubscriptions) > 0) {
+			return array_reduce($this->classesSubscriptions, function($count, $subscription) {
+					return $count + $subscription->getRemainingClasses();
+				}, 0);
+		}
+		return 0;
+	}
+
+	public function addClassesSubscription($numberOfClasses) {
+		$this->classesSubscriptions[] = $this->subscriptionFactory->createClassesSubscription($numberOfClasses);
+	}
+
 
 }

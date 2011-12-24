@@ -162,9 +162,10 @@ class FeatureContext extends BehatContext
     /**
      * @Given /^I have a student with (\d+) classes left$/
      */
-    public function iHaveAStudentWithClassesLeft($argument1)
+    public function iHaveAStudentWithClassesLeft($numberOfClasses)
     {
-        throw new PendingException();
+    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student->addClassesSubscription($numberOfClasses);
     }
 
     /**
@@ -179,9 +180,9 @@ class FeatureContext extends BehatContext
     /**
      * @Given /^he should have (\d+) classes left$/
      */
-    public function heShouldHaveClassesLeft($argument1)
+    public function heShouldHaveClassesLeft($expectedRemainingClassesCount)
     {
-        throw new PendingException();
+    	assertSame((int) $expectedRemainingClassesCount, $this->student->getRemainingClasses());
     }
 
     /**
@@ -215,9 +216,9 @@ class FeatureContext extends BehatContext
     /**
      * @When /^I sell him (\d+) classes$/
      */
-    public function iSellHimClasses($argument1)
+    public function iSellHimClasses($numberOfClasses)
     {
-        throw new PendingException();
+    	$this->student->addClassesSubscription($numberOfClasses);
     }
 
 }

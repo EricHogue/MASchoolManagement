@@ -112,6 +112,16 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($thirdEndDate, $userSubscription->getLastAllowedDate());
 	}
 
+	public function testHave0ClassesLeftWhenNoClassesSubscriptions() {
+		$this->assertSame(0, $this->userSubscriptions->getRemainingClasses());
+	}
+
+	public function testHave5ClassesLeftAfterAdding5Classes() {
+		$userSubscriptions = new UserSubscriptions(new SubscriptionFactory());
+		$userSubscriptions->addClassesSubscription(5);
+		$this->assertSame(5, $userSubscriptions->getRemainingClasses());
+	}
+
 
 
 

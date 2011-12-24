@@ -41,7 +41,26 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscription);
 		$this->assertSame('LastDate', $student->getEndOfSubscriptionDate());
-
 	}
 
+	public function testAddClassesSubscription() {
+		$userSubscription = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+			array('addClassesSubscription'), array(), '', false);
+		$userSubscription->expects($this->once())
+						 ->method('addClassesSubscription')
+						 ->with($this->equalTo(5));
+
+		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscription);
+		$student->addClassesSubscription(5);
+	}
+
+	public function testGetRemainingClassesGetThemFromUserSubscriptions() {
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+			array('getRemainingClasses'), array(), '', false);
+		$userSubscriptions->expects($this->once())
+						  ->method('getRemainingClasses');
+
+		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student->getRemainingClasses();
+	}
 }

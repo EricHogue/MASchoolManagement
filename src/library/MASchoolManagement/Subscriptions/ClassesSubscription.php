@@ -30,4 +30,8 @@ class ClassesSubscription implements Subscription {
 
 		$this->remainingClasses--;
 	}
+
+	public function getRemainingClasses() {
+		return $this->remainingClasses;
+	}
 }

@@ -37,4 +37,11 @@ class Student {
 		return $this->userSubscriptions->getLastAllowedDate();
 	}
 
+	public function addClassesSubscription($numberOfClasses) {
+		$this->userSubscriptions->addClassesSubscription($numberOfClasses);
+	}
+
+	public function getRemainingClasses() {
+		return $this->userSubscriptions->getRemainingClasses();
+	}
 }

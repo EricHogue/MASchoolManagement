@@ -42,4 +42,8 @@ class ClassesSubscriptionTest extends \PHPUnit_Framework_TestCase {
 		$this->subscription->addAttendance();
 		$this->subscription->addAttendance();
 	}
+
+	public function testRemainingClasses() {
+		$this->assertSame(3, $this->subscription->getRemainingClasses());
+	}
 }

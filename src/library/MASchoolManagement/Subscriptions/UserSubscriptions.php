@@ -24,14 +24,16 @@ class UserSubscriptions {
 		$lastDateAllowed = $this->getLastAllowedDate();
 		if (!isset($lastDateAllowed)) {
 			$lastDateAllowed = new \Zend\Date\Date();
+			$lastDateAllowed->setTime('23:59:59', 'HH:mm:ss');
 		}
 
 		$this->monthlySubscriptions[] = $this->subscriptionFactory->createMonthlySubscription($lastDateAllowed, $numberOfMonths);
 	}
 
 	public function getLastAllowedDate() {
-		if (count($this->monthlySubscriptions) > 0) {
-			return $this->monthlySubscriptions[0]->getEndDate();
+		$subscriptionCount = count($this->monthlySubscriptions);
+		if ($subscriptionCount > 0) {
+			return $this->monthlySubscriptions[$subscriptionCount - 1]->getEndDate();
 		}
 
 		return null;

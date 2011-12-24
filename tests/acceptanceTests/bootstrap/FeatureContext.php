@@ -145,9 +145,10 @@ class FeatureContext extends BehatContext
     /**
      * @Given /^I have a student with (\d+) months left on a monthly subscription$/
      */
-    public function iHaveAStudentWithMonthsLeftOnAMonthlySubscription($argument1)
+    public function iHaveAStudentWithMonthsLeftOnAMonthlySubscription($numberOfMonths)
     {
-        throw new PendingException();
+    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student->addMonthlySubscription($numberOfMonths);
     }
 
     /**

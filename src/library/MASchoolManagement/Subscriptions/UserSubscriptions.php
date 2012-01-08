@@ -52,5 +52,21 @@ class UserSubscriptions {
 		$this->classesSubscriptions[] = $this->subscriptionFactory->createClassesSubscription($numberOfClasses);
 	}
 
+	public function canAttend() {
+		foreach ($this->monthlySubscriptions as $monthlySubscription) {
+			if ($monthlySubscription->canAttend()) {
+				return true;
+			}
+		}
+
+		foreach ($this->classesSubscriptions as $classesSubscription) {
+			if ($classesSubscription->canAttend()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 
 }

@@ -26,6 +26,9 @@ class FeatureContext extends BehatContext
 	/** @var Student */
 	private $student;
 
+	/** @var boolean */
+	private $canAttend;
+
 
 
     /**
@@ -114,7 +117,7 @@ class FeatureContext extends BehatContext
      */
     public function aStudentWithNoSubscription()
     {
-        throw new PendingException();
+    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**
@@ -122,7 +125,7 @@ class FeatureContext extends BehatContext
      */
     public function heTryToAttendAClass()
     {
-        throw new PendingException();
+    	$this->canAttend = $this->student->attendClass();
     }
 
     /**
@@ -130,7 +133,7 @@ class FeatureContext extends BehatContext
      */
     public function heShouldBeDenied()
     {
-        throw new PendingException();
+    	assertFalse($this->canAttend);
     }
 
     /**

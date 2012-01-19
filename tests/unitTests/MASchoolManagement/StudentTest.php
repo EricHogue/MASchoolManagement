@@ -63,4 +63,26 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
 		$student->getRemainingClasses();
 	}
+
+	public function testAttendClassFailsWhenNoSubscriptions() {
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+			array('canAttend'), array(), '', false);
+		$userSubscriptions->expects($this->any())
+						  ->method('canAttend')
+						  ->will($this->returnValue(false));
+
+		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$this->assertFalse($student->attendClass());
+	}
+
+	public function testAttendClassPassWhenStudentCanAttend() {
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+			array('canAttend'), array(), '', false);
+		$userSubscriptions->expects($this->any())
+						  ->method('canAttend')
+						  ->will($this->returnValue(true));
+
+		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$this->assertTrue($student->attendClass());
+	}
 }

@@ -159,7 +159,7 @@ class FeatureContext extends BehatContext
      */
     public function heShouldBeAccepted()
     {
-        throw new PendingException();
+    	assertTrue($this->canAttend);
     }
 
     /**

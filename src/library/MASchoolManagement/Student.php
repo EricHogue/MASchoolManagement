@@ -44,4 +44,8 @@ class Student {
 	public function getRemainingClasses() {
 		return $this->userSubscriptions->getRemainingClasses();
 	}
+
+	public function attendClass() {
+		return $this->userSubscriptions->canAttend();
+	}
 }

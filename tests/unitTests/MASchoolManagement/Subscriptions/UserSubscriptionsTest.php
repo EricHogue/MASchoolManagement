@@ -37,7 +37,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 
 	public function testNewMonthlySubscriptionsAreCreatedAfterExistingOnes() {
 		$startDate = new \Zend\Date\Date();
-		$startDate->setTime('23:59:59', 'HH:mm:ss');
+		$startDate->setTime('00:00:00', 'HH:mm:ss');
 
 		$endDate = new \Zend\Date\Date();
 		$endDate->setTime('23:59:59', 'HH:mm:ss');
@@ -55,9 +55,14 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 				->method('createMonthlySubscription')
 				->with($this->equalTo($startDate), $this->equalTo(3))
 				->will($this->returnValue($monthlySubscription));
+
+		$newStartDate = clone $endDate;
+		$newStartDate->setTime('00:00:00', 'HH:mm:ss');
+		$newStartDate->addDay(1);
+
 		$factory->expects($this->at(1))
 				->method('createMonthlySubscription')
-				->with($this->equalTo($endDate), $this->equalTo(2));
+				->with($this->equalTo($newStartDate), $this->equalTo(2));
 
 		$userSubscriptions = new UserSubscriptions($factory);
 		$userSubscriptions->addMonthlySubscription(3);
@@ -253,6 +258,20 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$userSubscriptions->addClassesSubscription(3);
 
 		$this->assertFalse($userSubscriptions->canAttend());
+	}
+
+	public function testAddMonthlySubscriptionWithGivenStartDate() {
+		$startDate = new \Zend\Date\Date();
+		$startDate->addMonth(-4);
+
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
+			array('createMonthlySubscription'));
+		$factory->expects($this->any())
+				->method('createMonthlySubscription', '')
+				->with($this->equalTo($startDate));
+
+		$userSubscriptions = new UserSubscriptions($factory);
+		$userSubscriptions->addMonthlySubscriptionWithGivenStartDate($startDate, 2);
 	}
 
 }

@@ -2,21 +2,19 @@
 namespace MASchoolManagement\Subscriptions;
 
 class SubscriptionFactoryTest extends \PHPUnit_Framework_TestCase {
+	/** @var SubscriptionFactory */
+	private $factory;
+
 	public function setup() {
+		$this->factory = new SubscriptionFactory();
 	}
 
-	public function testCreate() {
-		$this->assertNotNull(new SubscriptionFactory());
-	}
 
 	public function testCreateClassesSubscription() {
-		$factory = new SubscriptionFactory();
-		$this->assertNotNull($factory->createClassesSubscription(1));
+		$this->assertNotNull($this->factory->createClassesSubscription(1));
 	}
 
 	public function testCreateMonthlySubscription() {
-		$factory = new SubscriptionFactory();
-		$this->assertNotNull($factory->createMonthlySubscription(new \Zend\Date\Date(), 3));
+		$this->assertNotNull($this->factory->createMonthlySubscription(new \Zend\Date\Date(), 3));
 	}
-
 }

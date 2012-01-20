@@ -176,7 +176,10 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithAnExpiredMonthlySubscription()
     {
-        throw new PendingException();
+    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$startDate = new \Zend\Date\Date();
+    	$startDate->addMonth(-2);
+    	$this->student->addMonthlySubscriptionWithGivenStartDate($startDate, 1);
     }
 
 

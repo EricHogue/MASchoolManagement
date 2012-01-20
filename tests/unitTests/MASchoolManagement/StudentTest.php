@@ -85,4 +85,16 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
 		$this->assertTrue($student->attendClass());
 	}
+
+	public function testAddMonthlySubscriptionWithGivenStartDateCallsFunctionOnUserSubscriptions() {
+		$startDate = new \Zend\Date\Date();
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+			array('addMonthlySubscriptionWithGivenStartDate'), array(), '', false);
+		$userSubscriptions->expects($this->once())
+						  ->method('addMonthlySubscriptionWithGivenStartDate')
+						  ->with($this->equalTo($startDate), $this->equalTo(3));
+
+		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student->addMonthlySubscriptionWithGivenStartDate($startDate, 3);
+	}
 }

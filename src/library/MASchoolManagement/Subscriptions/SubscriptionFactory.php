@@ -17,6 +17,4 @@ class SubscriptionFactory {
 
 		return new MonthlySubscription($startDate, $endDate);
 	}
-
-
 }

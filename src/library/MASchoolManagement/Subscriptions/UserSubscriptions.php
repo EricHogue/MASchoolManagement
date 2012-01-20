@@ -22,13 +22,22 @@ class UserSubscriptions {
 
 	public function addMonthlySubscription($numberOfMonths) {
 		$lastDateAllowed = $this->getLastAllowedDate();
-		if (!isset($lastDateAllowed)) {
+		if (isset($lastDateAllowed)) {
+			$lastDateAllowed->addDay(1);
+		}
+		else {
 			$lastDateAllowed = new \Zend\Date\Date();
-			$lastDateAllowed->setTime('23:59:59', 'HH:mm:ss');
 		}
 
-		$this->monthlySubscriptions[] = $this->subscriptionFactory->createMonthlySubscription($lastDateAllowed, $numberOfMonths);
+		$lastDateAllowed->setTime('00:00:00', 'HH:mm:ss');
+
+		$this->addMonthlySubscriptionWithGivenStartDate($lastDateAllowed, $numberOfMonths);
 	}
+
+	public function addMonthlySubscriptionWithGivenStartDate(\Zend\Date\Date $startDate, $numberOfMonths) {
+		$this->monthlySubscriptions[] = $this->subscriptionFactory->createMonthlySubscription($startDate, $numberOfMonths);
+	}
+
 
 	public function getLastAllowedDate() {
 		$subscriptionCount = count($this->monthlySubscriptions);
@@ -67,6 +76,5 @@ class UserSubscriptions {
 
 		return false;
 	}
-
 
 }

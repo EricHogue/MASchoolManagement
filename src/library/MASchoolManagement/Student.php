@@ -48,4 +48,8 @@ class Student {
 	public function attendClass() {
 		return $this->userSubscriptions->canAttend();
 	}
+
+	public function addMonthlySubscriptionWithGivenStartDate(\Zend\Date\Date $startDate, $numberOfMonths) {
+		$this->userSubscriptions->addMonthlySubscriptionWithGivenStartDate($startDate, $numberOfMonths);
+	}
 }

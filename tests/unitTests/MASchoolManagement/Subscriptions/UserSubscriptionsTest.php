@@ -318,4 +318,14 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$userSubscriptions->attendClass();
 	}
 
+	/**
+	 * @expectedException MASchoolManagement\Subscriptions\EndedSubscriptionException
+	 */
+	public function testCallingAttendClassesWhenNoSubscriptionThrowsAnException() {
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory');
+
+		$userSubscriptions = new UserSubscriptions($factory);
+		$userSubscriptions->attendClass();
+	}
+
 }

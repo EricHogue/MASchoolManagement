@@ -62,19 +62,39 @@ class UserSubscriptions {
 	}
 
 	public function canAttend() {
+		$validSubscription = $this->getFirstValidSubscription();
+
+		return isset($validSubscription);
+	}
+
+	public function attendClass() {
+		$validSubscription = $this->getFirstValidSubscription();
+
+		if (isset($validSubscription)) {
+			$validSubscription->addAttendance();
+		} else {
+			throw new EndedSubscriptionException();
+		}
+	}
+
+	/**
+	 * Return the first subsciption that is valid
+	 *
+	 * @return Subscription
+	 */
+	protected function getFirstValidSubscription() {
 		foreach ($this->monthlySubscriptions as $monthlySubscription) {
 			if ($monthlySubscription->canAttend()) {
-				return true;
+				return $monthlySubscription;
 			}
 		}
 
 		foreach ($this->classesSubscriptions as $classesSubscription) {
 			if ($classesSubscription->canAttend()) {
-				return true;
+				return $classesSubscription;
 			}
 		}
 
-		return false;
+		return null;
 	}
-
 }

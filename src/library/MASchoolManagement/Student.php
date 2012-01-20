@@ -46,7 +46,10 @@ class Student {
 	}
 
 	public function attendClass() {
-		return $this->userSubscriptions->canAttend();
+		if (!$this->userSubscriptions->canAttend()) return false;
+
+		$this->userSubscriptions->attendClass();
+		return true;
 	}
 
 	public function addMonthlySubscriptionWithGivenStartDate(\Zend\Date\Date $startDate, $numberOfMonths) {

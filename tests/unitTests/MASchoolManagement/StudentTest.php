@@ -1,6 +1,8 @@
 <?php
 namespace MASchoolManagement;
 
+use MASchoolManagement\Subscriptions\SubscriptionFactory;
+
 class StudentTest extends \PHPUnit_Framework_TestCase {
 	const FIRST_NAME = 'Eric';
 	const LAST_NAME = 'Hogue';
@@ -77,9 +79,12 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAttendClassPassWhenStudentCanAttend() {
 		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('canAttend'), array(), '', false);
+			array('canAttend', 'attendClass'), array(), '', false);
 		$userSubscriptions->expects($this->any())
 						  ->method('canAttend')
+						  ->will($this->returnValue(true));
+		$userSubscriptions->expects($this->once())
+						  ->method('attendClass')
 						  ->will($this->returnValue(true));
 
 		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
@@ -96,5 +101,19 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
 		$student->addMonthlySubscriptionWithGivenStartDate($startDate, 3);
+	}
+
+	public function testAttendClassCallsAttendOnUserSubscriptions() {
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+			array('canAttend', 'attendClass'), array(), '', false);
+		$userSubscriptions->expects($this->any())
+						  ->method('canAttend')
+						  ->will($this->returnValue(true));
+		$userSubscriptions->expects($this->once())
+						  ->method('attendClass')
+						  ->will($this->returnValue(true));
+
+		$student = new Student(self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student->attendClass();
 	}
 }

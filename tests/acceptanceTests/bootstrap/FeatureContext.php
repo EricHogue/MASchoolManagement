@@ -139,9 +139,9 @@ class FeatureContext extends BehatContext
     /**
      * @Given /^(\d+) classes left$/
      */
-    public function classesLeft($argument1)
+    public function classesLeft($numberOfClassesLeft)
     {
-        throw new PendingException();
+    	$this->student->addClassesSubscription($numberOfClassesLeft);
     }
 
 

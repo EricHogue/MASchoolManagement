@@ -46,7 +46,9 @@ class Student {
 	}
 
 	public function attendClass() {
-		if (!$this->userSubscriptions->canAttend()) return false;
+		if (!$this->userSubscriptions->canAttend()) {
+			return false;
+		}
 
 		$this->userSubscriptions->attendClass();
 		return true;

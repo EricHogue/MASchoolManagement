@@ -14,6 +14,7 @@ class SubscriptionFactory {
 	public function createMonthlySubscription(Date $startDate, $numberOfMonths) {
 		$endDate = clone $startDate;
 		$endDate->addMonth($numberOfMonths);
+		$endDate->addDay(-1);
 
 		return new MonthlySubscription($startDate, $endDate);
 	}

@@ -214,7 +214,11 @@ class FeatureContext extends BehatContext
     {
     	$expectedEndDate = new \Zend\Date\Date();
     	$expectedEndDate->addMonth($numberOfMonths);
+    	$expectedEndDate->addDay(-1);
     	$expectedEndDate->setTime('23:59:59', 'HH:mm:ss');
+
+    	error_log($expectedEndDate);
+    	error_log($this->student->getEndOfSubscriptionDate());
 
     	assertEquals($expectedEndDate, $this->student->getEndOfSubscriptionDate());
     }

@@ -29,6 +29,9 @@ class FeatureContext extends BehatContext
 	/** @var boolean */
 	private $canAttend;
 
+	/** @var StudentPersistor */
+	private $persistor;
+
 
 
     /**
@@ -51,7 +54,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveANewStudent()
     {
-        throw new PendingException();
+    	$this->student = new Student('Hogue', 'Eric', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**
@@ -59,7 +62,7 @@ class FeatureContext extends BehatContext
      */
     public function iCreateHisProfile()
     {
-        throw new PendingException();
+    	$this->getPersistor()->save($this->student);
     }
 
     /**
@@ -226,6 +229,15 @@ class FeatureContext extends BehatContext
     public function iSellHimClasses($numberOfClasses)
     {
     	$this->student->addClassesSubscription($numberOfClasses);
+    }
+
+
+    protected function getPersistor() {
+    	if (!isset($this->persistor)) {
+    		$this->persistor = new StudentPersistor();
+    	}
+
+    	return $this->persistor;
     }
 
 }

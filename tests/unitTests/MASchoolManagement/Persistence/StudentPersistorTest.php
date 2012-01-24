@@ -24,12 +24,12 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSaveNewStudentCallSaveOnDB() {
-		$collection = $this->getMock('MongoCollection', array('save'), array(), '', false);
+		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
 		$collection->expects($this->once())
 				   ->method('save')
 				   ->with($this->logicalAnd($this->arrayHasKey('FirstName'), $this->contains(self::STUDENT_FIRST_NAME)));
 
-		$db = $this->getMock('MongoDB', array('selectCollection'), array(), '', false);
+		$db = $this->getMock('MongoDB', array(), array(), '', false);
 		$db->expects($this->once())
 			->method('selectCollection')
 			->with('student')

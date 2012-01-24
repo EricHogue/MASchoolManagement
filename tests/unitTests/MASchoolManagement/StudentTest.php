@@ -36,7 +36,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 	public function testGetEndOfSubscriptionDate() {
 		$userSubscription = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('getLastAllowedDate'), array(), '', false);
+			array(), array(), '', false);
 		$userSubscription->expects($this->once())
 						 ->method('getLastAllowedDate')
 						 ->will($this->returnValue('LastDate'));
@@ -47,7 +47,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAddClassesSubscription() {
 		$userSubscription = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('addClassesSubscription'), array(), '', false);
+			array(), array(), '', false);
 		$userSubscription->expects($this->once())
 						 ->method('addClassesSubscription')
 						 ->with($this->equalTo(5));
@@ -58,7 +58,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 	public function testGetRemainingClassesGetThemFromUserSubscriptions() {
 		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('getRemainingClasses'), array(), '', false);
+			array(), array(), '', false);
 		$userSubscriptions->expects($this->once())
 						  ->method('getRemainingClasses');
 
@@ -68,7 +68,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAttendClassFailsWhenNoSubscriptions() {
 		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('canAttend'), array(), '', false);
+			array(), array(), '', false);
 		$userSubscriptions->expects($this->any())
 						  ->method('canAttend')
 						  ->will($this->returnValue(false));
@@ -79,7 +79,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAttendClassPassWhenStudentCanAttend() {
 		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('canAttend', 'attendClass'), array(), '', false);
+			array(), array(), '', false);
 		$userSubscriptions->expects($this->any())
 						  ->method('canAttend')
 						  ->will($this->returnValue(true));
@@ -94,7 +94,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 	public function testAddMonthlySubscriptionWithGivenStartDateCallsFunctionOnUserSubscriptions() {
 		$startDate = new \Zend\Date\Date();
 		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('addMonthlySubscriptionWithGivenStartDate'), array(), '', false);
+			array(), array(), '', false);
 		$userSubscriptions->expects($this->once())
 						  ->method('addMonthlySubscriptionWithGivenStartDate')
 						  ->with($this->equalTo($startDate), $this->equalTo(3));
@@ -105,7 +105,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAttendClassCallsAttendOnUserSubscriptions() {
 		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
-			array('canAttend', 'attendClass'), array(), '', false);
+			array(), array(), '', false);
 		$userSubscriptions->expects($this->any())
 						  ->method('canAttend')
 						  ->will($this->returnValue(true));

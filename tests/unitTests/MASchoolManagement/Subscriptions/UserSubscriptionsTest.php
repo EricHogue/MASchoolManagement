@@ -17,7 +17,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$endDate = new \Zend\Date\Date();
 		$endDate->addMonth(3);
 
-		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('getEndDate'),
+		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$monthlySubscription->expects($this->any())
 							->method('getEndDate')
@@ -43,13 +43,13 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$endDate->setTime('23:59:59', 'HH:mm:ss');
 		$endDate->addMonth(3);
 
-		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('getEndDate'),
+		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$monthlySubscription->expects($this->once())
 							->method('getEndDate')
 							->will($this->returnValue($endDate));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array('createMonthlySubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 
 		$factory->expects($this->at(0))
 				->method('createMonthlySubscription')
@@ -73,7 +73,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$firstEndDate = new \Zend\Date\Date();
 		$firstEndDate->setTime('23:59:59', 'HH:mm:ss')->addMonth(3);
 
-		$firstMonthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('getEndDate'),
+		$firstMonthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$firstMonthlySubscription->expects($this->atLeastOnce())
 							->method('getEndDate')
@@ -81,7 +81,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 
 		$secondEndDate = clone $firstEndDate;
 		$secondEndDate->addMonth(2);
-		$secondMonthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('getEndDate'),
+		$secondMonthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$secondMonthlySubscription->expects($this->atLeastOnce())
 							->method('getEndDate')
@@ -89,13 +89,13 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 
 		$thirdEndDate = clone $secondEndDate;
 		$thirdEndDate->addMonth(4);
-		$thirdMonthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('getEndDate'),
+		$thirdMonthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$thirdMonthlySubscription->expects($this->atLeastOnce())
 							->method('getEndDate')
 							->will($this->returnValue($thirdEndDate));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array('createMonthlySubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 
 		$factory->expects($this->at(0))
 				->method('createMonthlySubscription')
@@ -128,13 +128,13 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAttendCheckMonthlySubscription() {
-		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('canAttend'),
+		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$monthlySubscription->expects($this->once())
 							->method('canAttend')
 							->will($this->returnValue(false));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array('createMonthlySubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 
 		$factory->expects($this->any())
 				->method('createMonthlySubscription')
@@ -147,13 +147,13 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAttendCheckClassesSubscription() {
-		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array('canAttend'),
+		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array(),
 				array(), '', false);
 		$classesSubscription->expects($this->once())
 							->method('canAttend')
 							->will($this->returnValue(false));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array('createClassesSubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 
 		$factory->expects($this->any())
 				->method('createClassesSubscription')
@@ -166,19 +166,19 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAttendCheckForMonthlySubscriptionFirst() {
-		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('canAttend'),
+		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$monthlySubscription->expects($this->once())
 							->method('canAttend')
 							->will($this->returnValue(true));
 
-		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array('canAttend'),
+		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array(),
 				array(), '', false);
 		$classesSubscription->expects($this->never())
 							->method('canAttend');
 
 		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
-			array('createMonthlySubscription', 'createClassesSubscription'));
+			array());
 		$factory->expects($this->any())
 				->method('createMonthlySubscription')
 				->will($this->returnValue($monthlySubscription));
@@ -194,14 +194,14 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAttendWhenMonthlySubscriptionSaysSo() {
-		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('canAttend'),
+		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$monthlySubscription->expects($this->any())
 							->method('canAttend')
 							->will($this->returnValue(true));
 
 		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
-			array('createMonthlySubscription'));
+			array());
 		$factory->expects($this->any())
 				->method('createMonthlySubscription')
 				->will($this->returnValue($monthlySubscription));
@@ -213,14 +213,13 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAttendWhenClassesSubscriptionSaysSo() {
-		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array('canAttend'),
+		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array(),
 				array(), '', false);
 		$classesSubscription->expects($this->any())
 							->method('canAttend')
 							->will($this->returnValue(true));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
-			array('createClassesSubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 		$factory->expects($this->any())
 				->method('createClassesSubscription')
 				->will($this->returnValue($classesSubscription));
@@ -232,20 +231,19 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCantAttendWhenMonthlyAndClassesSubscriptionSaysNo() {
-		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('canAttend'),
+		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$monthlySubscription->expects($this->any())
 							->method('canAttend')
 							->will($this->returnValue(false));
 
-		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array('canAttend'),
+		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array(),
 				array(), '', false);
 		$classesSubscription->expects($this->any())
 							->method('canAttend')
 							->will($this->returnValue(false));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
-			array('createMonthlySubscription', 'createClassesSubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 		$factory->expects($this->any())
 				->method('createMonthlySubscription', '')
 				->will($this->returnValue($monthlySubscription));
@@ -264,8 +262,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 		$startDate = new \Zend\Date\Date();
 		$startDate->addMonth(-4);
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
-			array('createMonthlySubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 		$factory->expects($this->any())
 				->method('createMonthlySubscription', '')
 				->with($this->equalTo($startDate));
@@ -275,7 +272,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testAttendClassCallAttendOnMonthlySubscription() {
-		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array('addAttendance', 'canAttend'),
+		$monthlySubscription = $this->getMock('\MASchoolManagement\Subscriptions\MonthlySubscription', array(),
 				array(), '', false);
 		$monthlySubscription->expects($this->any())
 							->method('canAttend')
@@ -284,8 +281,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 							->method('addAttendance')
 							->will($this->returnValue(true));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
-			array('createMonthlySubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 		$factory->expects($this->any())
 				->method('createMonthlySubscription', '')
 				->will($this->returnValue($monthlySubscription));
@@ -297,7 +293,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testAttendClassCallAttendOnClassesSubscription() {
-		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array('addAttendance', 'canAttend'),
+		$classesSubscription = $this->getMock('\MASchoolManagement\Subscriptions\ClassesSubscription', array(),
 				array(), '', false);
 		$classesSubscription->expects($this->any())
 							->method('canAttend')
@@ -306,8 +302,7 @@ class UserSubscriptionsTest extends \PHPUnit_Framework_TestCase {
 							->method('addAttendance')
 							->will($this->returnValue(true));
 
-		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory',
-			array('createClassesSubscription'));
+		$factory = $this->getMock('\MASchoolManagement\Subscriptions\SubscriptionFactory', array());
 		$factory->expects($this->any())
 				->method('createClassesSubscription', '')
 				->will($this->returnValue($classesSubscription));

@@ -13,6 +13,6 @@ class StudentPersistor {
 
 	public function save(Student $student) {
 		$collection = $this->dbConnection->selectCollection('student');
-		$collection->save(array('FirstName' => $student->getFirstName()));
+		$collection->save(array('FirstName' => $student->getFirstName(), 'LastName' => $student->getLastName()));
 	}
 }

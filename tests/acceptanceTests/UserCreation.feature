@@ -1,3 +1,4 @@
+@database
 Feature: Create a student
 	In order to track students
 	As a user of the system

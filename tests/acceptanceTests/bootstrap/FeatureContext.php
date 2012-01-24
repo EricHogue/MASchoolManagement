@@ -4,6 +4,7 @@ use MASchoolManagement\Subscriptions\SubscriptionFactory;
 use MASchoolManagement\Subscriptions\UserSubscriptions;
 use MASchoolManagement\Student;
 use MASchoolManagement\Subscriptions\ClassesSubscription;
+use MASchoolManagement\Persistence\StudentPersistor;
 use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
     Behat\Behat\Context\BehatContext,
@@ -234,10 +235,32 @@ class FeatureContext extends BehatContext
 
     protected function getPersistor() {
     	if (!isset($this->persistor)) {
-    		$this->persistor = new StudentPersistor();
+
     	}
 
     	return $this->persistor;
     }
+
+	/**
+	 * @BeforeScenario @database
+	 */
+	public function openDatabase() {
+		$connection = new Mongo();
+		$db = $connection->TestMASchoolManagement;
+
+		$this->db = $db;
+		$this->persistor = new StudentPersistor($db);
+	}
+
+	/** @var MongoDB */
+	private $db;
+
+
+	/**
+	 * @AfterScenario @database
+	 */
+	public function cleanDatabase() {
+		$this->db->drop();
+	}
 
 }

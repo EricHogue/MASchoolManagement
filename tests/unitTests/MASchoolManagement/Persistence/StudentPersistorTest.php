@@ -26,11 +26,42 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 	public function testSaveNewStudentCallSaveOnDB() {
 		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
 		$collection->expects($this->once())
+				   ->method('save');
+
+		$db = $this->getMock('MongoDB', array(), array(), '', false);
+		$db->expects($this->once())
+			->method('selectCollection')
+			->with('student')
+			->will($this->returnValue($collection));
+
+		$persistor = new StudentPersistor($db);
+		$persistor->save($this->student);
+	}
+
+	public function testSaveSendTheFirstNameToTheDB() {
+		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
+		$collection->expects($this->once())
 				   ->method('save')
 				   ->with($this->logicalAnd($this->arrayHasKey('FirstName'), $this->contains(self::STUDENT_FIRST_NAME)));
 
 		$db = $this->getMock('MongoDB', array(), array(), '', false);
-		$db->expects($this->once())
+		$db->expects($this->any())
+			->method('selectCollection')
+			->with('student')
+			->will($this->returnValue($collection));
+
+		$persistor = new StudentPersistor($db);
+		$persistor->save($this->student);
+	}
+
+	public function testSaveSendTheLastNameToTheDB() {
+		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
+		$collection->expects($this->once())
+				   ->method('save')
+				   ->with($this->logicalAnd($this->arrayHasKey('LastName'), $this->contains(self::STUDENT_LAST_NAME)));
+
+		$db = $this->getMock('MongoDB', array(), array(), '', false);
+		$db->expects($this->any())
 			->method('selectCollection')
 			->with('student')
 			->will($this->returnValue($collection));

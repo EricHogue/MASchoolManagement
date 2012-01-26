@@ -7,6 +7,7 @@ use \MASchoolManagement\Student;
 class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 	const STUDENT_FIRST_NAME = 'Eric';
 	const STUDENT_LAST_NAME = 'Hogue';
+	const STUDENT_ID = 123456;
 
 	/** @var Student */
 	private $student;
@@ -68,5 +69,22 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 
 		$persistor = new StudentPersistor($db);
 		$persistor->save($this->student);
+	}
+
+	public function testLoadCallFindWithTheID() {
+		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
+		$collection->expects($this->once())
+				   ->method('find')
+				   ->with($this->logicalAnd($this->arrayHasKey('_id'), $this->contains(self::STUDENT_ID)))
+				   ->will($this->returnValue(array()));
+
+		$db = $this->getMock('MongoDB', array(), array(), '', false);
+		$db->expects($this->any())
+			->method('selectCollection')
+			->with('student')
+			->will($this->returnValue($collection));
+
+		$persitor = new StudentPersistor($db);
+		$persitor->load(self::STUDENT_ID);
 	}
 }

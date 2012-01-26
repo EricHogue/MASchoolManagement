@@ -14,9 +14,13 @@ class Student {
 	/** @var string */
 	private $firstName;
 
+	/** @var int */
+	private $id;
 
-	public function __construct($lastName, $firstName, UserSubscriptions $userSubscriptions) {
+
+	public function __construct($id, $lastName, $firstName, UserSubscriptions $userSubscriptions) {
 		$this->userSubscriptions = $userSubscriptions;
+		$this->id = $id;
 		$this->lastName = $lastName;
 		$this->firstName = $firstName;
 	}
@@ -27,6 +31,10 @@ class Student {
 
 	public function getLastName() {
 		return $this->lastName;
+	}
+
+	public function getId() {
+		return $this->id;
 	}
 
 	public function addMonthlySubscription($numberOfMonths) {

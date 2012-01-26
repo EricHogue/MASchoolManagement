@@ -15,4 +15,10 @@ class StudentPersistor {
 		$collection = $this->dbConnection->selectCollection('student');
 		$collection->save(array('FirstName' => $student->getFirstName(), 'LastName' => $student->getLastName()));
 	}
+
+	public function load($id) {
+		$collection = $this->dbConnection->selectCollection('student');
+		$collection->find(array('_id' => $id));
+
+	}
 }

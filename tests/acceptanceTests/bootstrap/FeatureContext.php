@@ -55,7 +55,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveANewStudent()
     {
-    	$this->student = new Student('Hogue', 'Eric', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student(12345, 'Hogue', 'Eric', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**
@@ -121,7 +121,7 @@ class FeatureContext extends BehatContext
      */
     public function aStudentWithNoSubscription()
     {
-    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**
@@ -154,7 +154,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithMonthsLeftOnAMonthlySubscription($numberOfMonths)
     {
-    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
     	$this->student->addMonthlySubscription($numberOfMonths);
     }
 
@@ -171,7 +171,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithClassesLeft($numberOfClasses)
     {
-    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
     	$this->student->addClassesSubscription($numberOfClasses);
     }
 
@@ -180,7 +180,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithAnExpiredMonthlySubscription()
     {
-    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
     	$startDate = new \Zend\Date\Date();
     	$startDate->addMonth(-2);
     	$this->student->addMonthlySubscriptionWithGivenStartDate($startDate, 1);
@@ -200,7 +200,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithoutMonthlySubscription()
     {
-    	$this->student = new Student('', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**

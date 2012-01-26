@@ -63,7 +63,7 @@ class FeatureContext extends BehatContext
      */
     public function iCreateHisProfile()
     {
-    	$this->getPersistor()->save($this->student);
+    	$this->getPersistor()->create($this->student);
     }
 
     /**

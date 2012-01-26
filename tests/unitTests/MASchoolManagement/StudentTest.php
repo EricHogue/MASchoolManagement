@@ -25,7 +25,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testHasID() {
-		$this->assertSame(self::ID, $this->student->getId());
+		$this->assertSame(self::ID, $this->student->getStudentId());
 	}
 
 	public function testAddMonthlySubscription() {

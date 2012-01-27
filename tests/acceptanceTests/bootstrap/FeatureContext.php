@@ -71,7 +71,7 @@ class FeatureContext extends BehatContext
      */
     public function iCanRetrieveItBack()
     {
-        throw new PendingException();
+    	assertInstanceOf('\MASchoolManagement\Student', $this->getPersistor()->load(12345));
     }
 
     /**

@@ -29,5 +29,6 @@ class StudentPersistor {
 			return new Student($info['_id'], $info['LastName'], $info['FirstName'], new UserSubscriptions(new SubscriptionFactory()));
 		}
 
+		return null;
 	}
 }

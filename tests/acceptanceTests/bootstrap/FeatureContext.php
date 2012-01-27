@@ -75,6 +75,30 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * @When /^I load student with id (\d+)$/
+     */
+    public function iLoadStudentWithId($studentId)
+    {
+		$this->student = $this->getPersistor()->load($studentId);
+    }
+
+    /**
+     * @Then /^it should be null$/
+     */
+    public function itShouldBeNull()
+    {
+        assertNull($this->student);
+    }
+
+    /**
+     * @Given /^I don\'t have a student with id (\d+)$/
+     */
+    public function iDonTHaveAStudentWithId($argument1)
+    {
+    }
+
+
+    /**
      * @Given /^I have a student With id: (\d+), firstname "([^"]*)", lastname: "([^"]*)" and rank: "([^"]*)"$/
      */
     public function iHaveAStudentWithIdFirstnameLastnameAndRank($argument1, $argument2, $argument3, $argument4)

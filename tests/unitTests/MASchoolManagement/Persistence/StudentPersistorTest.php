@@ -128,4 +128,20 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 		$persitor = new StudentPersistor($db);
 		$this->assertInstanceOf('\MASchoolManagement\Student', $persitor->load(self::STUDENT_ID));
 	}
+
+	public function testLoadReturnsNullWhenUserDoesNotExists() {
+		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
+		$collection->expects($this->any())
+				   ->method('findOne')
+				   ->will($this->returnValue(null));
+
+		$db = $this->getMock('MongoDB', array(), array(), '', false);
+		$db->expects($this->any())
+			->method('selectCollection')
+			->will($this->returnValue($collection));
+
+		$persitor = new StudentPersistor($db);
+		$this->assertNull($persitor->load(self::STUDENT_ID));
+	}
+
 }

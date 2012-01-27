@@ -1,4 +1,4 @@
 default:
     paths:
-        features: './tests/acceptanceTests/'
+        features: './tests/integrationTests/'
         bootstrap: '%behat.paths.features%/bootstrap'

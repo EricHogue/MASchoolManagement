@@ -12,6 +12,10 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 	/** @var Student */
 	private $student;
 
+	/** @var array */
+	private $studentData;
+
+
 	public function setup() {
 		$student = $this->getMock('\MASchoolManagement\Student', array(), array(), '', false);
 		$student->expects($this->any())
@@ -25,6 +29,9 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 				->will($this->returnValue(self::STUDENT_LAST_NAME));
 
 		$this->student = $student;
+
+		$this->studentData = array('_id' => self::STUDENT_ID, 'FirstName' => self::STUDENT_FIRST_NAME,
+			'LastName' => self::STUDENT_LAST_NAME);
 	}
 
 	public function testCreateNewStudentCallInsertOnDB() {
@@ -93,9 +100,9 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 	public function testLoadCallFindWithTheID() {
 		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
 		$collection->expects($this->once())
-				   ->method('find')
+				   ->method('findOne')
 				   ->with($this->logicalAnd($this->arrayHasKey('_id'), $this->contains(self::STUDENT_ID)))
-				   ->will($this->returnValue(array()));
+				   ->will($this->returnValue($this->studentData));
 
 		$db = $this->getMock('MongoDB', array(), array(), '', false);
 		$db->expects($this->any())
@@ -105,5 +112,20 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 
 		$persitor = new StudentPersistor($db);
 		$persitor->load(self::STUDENT_ID);
+	}
+
+	public function testLoadReturnsAStudentObject() {
+		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
+		$collection->expects($this->any())
+				   ->method('findOne')
+				   ->will($this->returnValue($this->studentData));
+
+		$db = $this->getMock('MongoDB', array(), array(), '', false);
+		$db->expects($this->any())
+			->method('selectCollection')
+			->will($this->returnValue($collection));
+
+		$persitor = new StudentPersistor($db);
+		$this->assertInstanceOf('\MASchoolManagement\Student', $persitor->load(self::STUDENT_ID));
 	}
 }

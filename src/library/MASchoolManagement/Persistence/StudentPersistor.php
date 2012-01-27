@@ -1,6 +1,10 @@
 <?php
 namespace MASchoolManagement\Persistence;
 
+use MASchoolManagement\Subscriptions\SubscriptionFactory;
+
+use MASchoolManagement\Subscriptions\UserSubscriptions;
+
 use \MASchoolManagement\Student;
 
 class StudentPersistor {
@@ -19,7 +23,11 @@ class StudentPersistor {
 
 	public function load($studentId) {
 		$collection = $this->dbConnection->selectCollection('student');
-		$collection->find(array('_id' => $studentId));
+		$info = $collection->findOne(array('_id' => $studentId));
+
+		if (isset($info)) {
+			return new Student($info['_id'], $info['LastName'], $info['FirstName'], new UserSubscriptions(new SubscriptionFactory()));
+		}
 
 	}
 }

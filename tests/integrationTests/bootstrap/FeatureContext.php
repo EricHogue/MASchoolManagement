@@ -33,6 +33,10 @@ class FeatureContext extends BehatContext
 	/** @var StudentPersistor */
 	private $persistor;
 
+	/** @var int */
+	private $studentId;
+
+
 
 
     /**
@@ -51,14 +55,6 @@ class FeatureContext extends BehatContext
 
 
     /**
-     * @Given /^I have a new student$/
-     */
-    public function iHaveANewStudent()
-    {
-    	$this->student = new Student(12345, 'Hogue', 'Eric', new UserSubscriptions(new SubscriptionFactory()));
-    }
-
-    /**
      * @When /^I create his profile$/
      */
     public function iCreateHisProfile()
@@ -71,7 +67,7 @@ class FeatureContext extends BehatContext
      */
     public function iCanRetrieveItBack()
     {
-    	assertInstanceOf('\MASchoolManagement\Student', $this->getPersistor()->load(12345));
+    	assertInstanceOf('\MASchoolManagement\Student', $this->getPersistor()->load($this->studentId));
     }
 
     /**
@@ -101,42 +97,43 @@ class FeatureContext extends BehatContext
     /**
      * @Given /^I have a student With id: (\d+), firstname "([^"]*)", lastname: "([^"]*)" and rank: "([^"]*)"$/
      */
-    public function iHaveAStudentWithIdFirstnameLastnameAndRank($argument1, $argument2, $argument3, $argument4)
+    public function iHaveAStudentWithIdFirstnameLastnameAndRank($studentId, $firstName, $lastName, $rank)
     {
-        throw new PendingException();
+    	$this->studentId = $studentId;
+        $this->student = new Student($studentId, $lastName, $firstName, $rank, new UserSubscriptions(new SubscriptionFactory()));
     }
-
 
     /**
-     * @When /^I load his profile$/
+     * @Then /^his id should be (\d+)$/
      */
-    public function iLoadHisProfile()
+    public function hisIdShouldBe($expectedId)
     {
-        throw new PendingException();
+    	assertSame((int) $expectedId, $this->student->getStudentId());
     }
+
 
     /**
      * @Then /^his firstname should be "([^"]*)"$/
      */
-    public function hisFirstnameShouldBe($argument1)
+    public function hisFirstnameShouldBe($expectedFirstName)
     {
-        throw new PendingException();
+    	assertSame($expectedFirstName, $this->student->getFirstName());
     }
 
     /**
      * @Given /^his lastname should be "([^"]*)"$/
      */
-    public function hisLastnameShouldBe($argument1)
+    public function hisLastnameShouldBe($expectedLastName)
     {
-        throw new PendingException();
+    	assertSame($expectedLastName, $this->student->getLastName());
     }
 
     /**
      * @Given /^his rank should be "([^"]*)"$/
      */
-    public function hisRankShouldBe($argument1)
+    public function hisRankShouldBe($expectedRank)
     {
-        throw new PendingException();
+    	assertSame($expectedRank, $this->student->getRank());
     }
 
 
@@ -145,7 +142,7 @@ class FeatureContext extends BehatContext
      */
     public function aStudentWithNoSubscription()
     {
-    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', '', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**
@@ -178,7 +175,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithMonthsLeftOnAMonthlySubscription($numberOfMonths)
     {
-    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', '', new UserSubscriptions(new SubscriptionFactory()));
     	$this->student->addMonthlySubscription($numberOfMonths);
     }
 
@@ -195,7 +192,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithClassesLeft($numberOfClasses)
     {
-    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', '', new UserSubscriptions(new SubscriptionFactory()));
     	$this->student->addClassesSubscription($numberOfClasses);
     }
 
@@ -204,7 +201,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithAnExpiredMonthlySubscription()
     {
-    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', '', new UserSubscriptions(new SubscriptionFactory()));
     	$startDate = new \Zend\Date\Date();
     	$startDate->addMonth(-2);
     	$this->student->addMonthlySubscriptionWithGivenStartDate($startDate, 1);
@@ -224,7 +221,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveAStudentWithoutMonthlySubscription()
     {
-    	$this->student = new Student('', '', '', new UserSubscriptions(new SubscriptionFactory()));
+    	$this->student = new Student('', '', '', '', new UserSubscriptions(new SubscriptionFactory()));
     }
 
     /**

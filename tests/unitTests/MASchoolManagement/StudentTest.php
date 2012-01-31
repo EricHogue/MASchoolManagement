@@ -7,13 +7,14 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 	const FIRST_NAME = 'Eric';
 	const LAST_NAME = 'Hogue';
 	const ID = 12345;
+	const RANK = 'kyu3';
 
 	/** @var Student */
 	private $student;
 
 	public function setup() {
 		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions', null, array(), '', false);
-		$this->student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$this->student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 	}
 
 	public function testHasAFirstName() {
@@ -29,35 +30,35 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testAddMonthlySubscription() {
-		$userSubscription = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
 			array('addMonthlySubscription'), array(), '', false);
-		$userSubscription->expects($this->once())
+		$userSubscriptions->expects($this->once())
 						 ->method('addMonthlySubscription')
 						 ->with($this->equalTo(3));
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscription);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$student->addMonthlySubscription(3);
 	}
 
 	public function testGetEndOfSubscriptionDate() {
-		$userSubscription = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
 			array(), array(), '', false);
-		$userSubscription->expects($this->once())
+		$userSubscriptions->expects($this->once())
 						 ->method('getLastAllowedDate')
 						 ->will($this->returnValue('LastDate'));
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscription);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$this->assertSame('LastDate', $student->getEndOfSubscriptionDate());
 	}
 
 	public function testAddClassesSubscription() {
-		$userSubscription = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
+		$userSubscriptions = $this->getMock('\MASchoolManagement\Subscriptions\UserSubscriptions',
 			array(), array(), '', false);
-		$userSubscription->expects($this->once())
+		$userSubscriptions->expects($this->once())
 						 ->method('addClassesSubscription')
 						 ->with($this->equalTo(5));
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscription);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$student->addClassesSubscription(5);
 	}
 
@@ -67,7 +68,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 		$userSubscriptions->expects($this->once())
 						  ->method('getRemainingClasses');
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$student->getRemainingClasses();
 	}
 
@@ -78,7 +79,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 						  ->method('canAttend')
 						  ->will($this->returnValue(false));
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$this->assertFalse($student->attendClass());
 	}
 
@@ -92,7 +93,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 						  ->method('attendClass')
 						  ->will($this->returnValue(true));
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$this->assertTrue($student->attendClass());
 	}
 
@@ -104,7 +105,7 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 						  ->method('addMonthlySubscriptionWithGivenStartDate')
 						  ->with($this->equalTo($startDate), $this->equalTo(3));
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$student->addMonthlySubscriptionWithGivenStartDate($startDate, 3);
 	}
 
@@ -118,7 +119,11 @@ class StudentTest extends \PHPUnit_Framework_TestCase {
 						  ->method('attendClass')
 						  ->will($this->returnValue(true));
 
-		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, $userSubscriptions);
+		$student = new Student(self::ID, self::LAST_NAME, self::FIRST_NAME, self::RANK, $userSubscriptions);
 		$student->attendClass();
+	}
+
+	public function testHasRank() {
+		$this->assertSame(self::RANK, $this->student->getRank());
 	}
 }

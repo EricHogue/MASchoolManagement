@@ -17,12 +17,17 @@ class Student {
 	/** @var int */
 	private $studentId;
 
+	/** @var string */
+	private $rank;
 
-	public function __construct($studentId, $lastName, $firstName, UserSubscriptions $userSubscriptions) {
+
+
+	public function __construct($studentId, $lastName, $firstName, $rank, UserSubscriptions $userSubscriptions) {
 		$this->userSubscriptions = $userSubscriptions;
 		$this->studentId = $studentId;
 		$this->lastName = $lastName;
 		$this->firstName = $firstName;
+		$this->rank = $rank;
 	}
 
 	public function getFirstName() {
@@ -35,6 +40,10 @@ class Student {
 
 	public function getStudentId() {
 		return $this->studentId;
+	}
+
+	public function getRank() {
+		return $this->rank;
 	}
 
 	public function addMonthlySubscription($numberOfMonths) {

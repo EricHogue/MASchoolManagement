@@ -8,6 +8,7 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 	const STUDENT_FIRST_NAME = 'Eric';
 	const STUDENT_LAST_NAME = 'Hogue';
 	const STUDENT_ID = 123456;
+	const STUDENT_RANK = 'kuy9';
 
 	/** @var Student */
 	private $student;
@@ -27,11 +28,14 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 		$student->expects($this->any())
 				->method('getLastName')
 				->will($this->returnValue(self::STUDENT_LAST_NAME));
+		$student->expects($this->any())
+				->method('getRank')
+				->will($this->returnValue(self::STUDENT_RANK));
 
 		$this->student = $student;
 
 		$this->studentData = array('_id' => self::STUDENT_ID, 'FirstName' => self::STUDENT_FIRST_NAME,
-			'LastName' => self::STUDENT_LAST_NAME);
+			'LastName' => self::STUDENT_LAST_NAME, 'Rank' => self::STUDENT_RANK);
 	}
 
 	public function testCreateNewStudentCallInsertOnDB() {
@@ -86,6 +90,22 @@ class StudentPersistorTest extends \PHPUnit_Framework_TestCase {
 		$collection->expects($this->once())
 				   ->method('insert')
 				   ->with($this->logicalAnd($this->arrayHasKey('LastName'), $this->contains(self::STUDENT_LAST_NAME)));
+
+		$db = $this->getMock('MongoDB', array(), array(), '', false);
+		$db->expects($this->any())
+			->method('selectCollection')
+			->with('student')
+			->will($this->returnValue($collection));
+
+		$persistor = new StudentPersistor($db);
+		$persistor->create($this->student);
+	}
+
+	public function testCreateSendTheRankToTheDB() {
+		$collection = $this->getMock('MongoCollection', array(), array(), '', false);
+		$collection->expects($this->once())
+				   ->method('insert')
+				   ->with($this->logicalAnd($this->arrayHasKey('Rank'), $this->contains(self::STUDENT_RANK)));
 
 		$db = $this->getMock('MongoDB', array(), array(), '', false);
 		$db->expects($this->any())

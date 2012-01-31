@@ -19,7 +19,7 @@ class StudentPersistor {
 		$options = array( 'safe' => true );
 		$collection = $this->dbConnection->selectCollection('student');
 		$collection->insert(array('_id' => $student->getStudentId(), 'FirstName' => $student->getFirstName(),
-			'LastName' => $student->getLastName()), $options);
+			'LastName' => $student->getLastName(), 'Rank' => $student->getRank()), $options);
 	}
 
 	public function load($studentId) {
@@ -27,7 +27,8 @@ class StudentPersistor {
 		$info = $collection->findOne(array('_id' => $studentId));
 
 		if (isset($info)) {
-			return new Student($info['_id'], $info['LastName'], $info['FirstName'], new UserSubscriptions(new SubscriptionFactory()));
+			return new Student((int) $info['_id'], $info['LastName'], $info['FirstName'], $info['Rank'],
+				new UserSubscriptions(new SubscriptionFactory()));
 		}
 
 		return null;
